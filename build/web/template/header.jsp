@@ -1,0 +1,1 @@
+<img src="<%= request.getContextPath() %>/imagens/FotoG1.jpeg"  class="img-header">

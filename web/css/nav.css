@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5 de mar de 2023, 22:03:25
+    Author     : ltp3etb
+*/
+
+header{
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+}
+
+.navbar{
+    padding: 20px 0;
+}
+
+
+
+.nav-item{
+    font-weight: 800;
+    text-transform: uppercase;
+}
+/*
+.navbar-light .navbar-nav .nav-link {
+   background: #262626;
+   color: #fff;
+}
+
+*/
+
+/*
+.navbar-light .navbar-nav .nav-item.active .nav-link {
+   background: #262626;
+   color: #fff;
+}
+*/
+
+.navbar-light .navbar-nav .nav-item .nav-link:hover, 
+.navbar-light .navbar-nav .nav-item.active .nav-link{
+   background: #262626;
+   color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-item .nav-link{
+    background: #fff;
+    color:#262626;
+    padding: 5px 15px;
+    
+}
+
+.navbar-light .navbar-toggler {
+    border: none;
+    color: #fff;
+    border: 2px solid #f7f7f7;
+    border-radius: 0;
+    outline: none;
+}
+
+.navbar-collapse{
+    background: #fff;
+}
+
+.img-header {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+}
