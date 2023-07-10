@@ -1,13 +1,18 @@
 package model;
 
+import com.aspose.pdf.Document;
+
 import factory.ConexaoFactory;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import lombok.Data;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import com.aspose.pdf.*;
 
 public class AgendamentoDAO {
 
@@ -15,7 +20,7 @@ public class AgendamentoDAO {
     PreparedStatement ps;
     ResultSet rs;
     String sql;
-
+        
     public ArrayList<Agendamento> getLista() throws SQLException {
 
         ArrayList<Agendamento> lista = new ArrayList<>();
@@ -85,8 +90,11 @@ public class AgendamentoDAO {
     public Agendamento getCarregarPotId(int idAgendamento) throws SQLException {
         Agendamento a = new Agendamento();
 
-        sql = "SELECT idAgendamento, valorTotal, status, idCliente, idUsuario "
-                + "FROM agendamento WHERE idAgendamento = ? ";
+        sql = "SELECT a.idAgendamento, a.valorTotal, a.status, c.idCliente, c.nome, u.idUsuario, u.nome" 
+               + " FROM agendamento a " 
+               + "INNER JOIN cliente c On c.idCliente = a.idCliente "
+               + "INNER JOIN usuario u On u.idUsuario = a.idUsuario "
+               + "WHERE a.idAgendamento = ? ";
         con = ConexaoFactory.conectar();
         ps = con.prepareStatement(sql);
         ps.setInt(1, idAgendamento);
@@ -97,12 +105,13 @@ public class AgendamentoDAO {
             a.setStatus(rs.getInt("a.status"));
 
             Cliente c = new Cliente();
-            c.setIdCliente(rs.getInt("idCliente"));
-
+            c.setIdCliente(rs.getInt("c.idCliente"));
+            c.setNome(rs.getString("c.nome"));
             a.setCliente(c);
 
             Usuario u = new Usuario();
-            u.setIdUsuario(rs.getInt("idUsuario"));
+            u.setIdUsuario(rs.getInt("u.idUsuario"));
+            u.setNome(rs.getString("u.nome"));
             a.setUsuario(u);
 
         }

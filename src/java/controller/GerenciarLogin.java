@@ -100,7 +100,7 @@ public class GerenciarLogin extends HttpServlet {
             
             }else{
                 String uri = request.getRequestURI();
-                String queryString =request.getQueryString();
+                String queryString = request.getQueryString();
                 if(queryString != null){
                     uri += "?" + queryString;
                 }

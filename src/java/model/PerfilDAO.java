@@ -100,6 +100,59 @@ public class PerfilDAO {
         
     }
     
+    public Perfil get(int idPerfil)
+        throws SQLException{
+        Perfil p = new Perfil();
+        sql = "SELECT idPerfil, nome, dataCadastro, status " +
+              "FROM perfil WHERE idPerfil = ?";
+        
+        con = ConexaoFactory.conectar();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, idPerfil);
+        rs = ps.executeQuery();
+        if(rs.next()){
+            p.setIdPerfil(rs.getInt("idPerfil"));
+            p.setNome(rs.getString("nome"));
+            p.setDataCadastro(rs.getDate("dataCadastro"));
+            p.setStatus(rs.getInt("status"));
+            
+        }
+        
+        ConexaoFactory.close(con);
+        
+        
+        return p;    
+    }
+    
+    public ArrayList<Menu> getMenus(int idPerfil)
+        throws SQLException{
+        ArrayList<Menu> menus = new ArrayList<>();
+        sql = "SELECT M.idmenu, M.nome, M.link, M.exibir FROM menu M\n" +
+            "INNER JOIN menu_perfil MP ON MP.idmenu = M.idmenu\n" +
+            "INNER JOIN perfil P ON P.idPerfil = MP.idPerfil\n" +
+            "WHERE P.idPerfil = ?";
+        
+        con = ConexaoFactory.conectar();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, idPerfil);
+        rs = ps.executeQuery();      
+        
+        if(rs.next()){
+            Menu m = new Menu();
+            
+            m.setIdMenu(rs.getInt("M.idmenu"));
+            m.setNome(rs.getString("M.nome"));
+            m.setLink(rs.getString("M.link"));
+            m.setExibir(rs.getInt("M.exibir"));
+            
+            menus.add(m);
+        }
+        
+        ConexaoFactory.close(con);
+        
+        return menus;    
+    }
+    
     public boolean desativar(Perfil p)throws SQLException{
         sql = "UPDATE perfil set status = 0 " +
               "WHERE idPerfil = ?";

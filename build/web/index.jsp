@@ -1,10 +1,20 @@
 
 
+<%@page import="controller.GerenciarLogin"%>
+<%@page import="model.Usuario"%>
 <%@page contentType="text/html; utf-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import="javax.servlet.http.HttpSession" %>
 <!DOCTYPE html>
+
+<%
+    Usuario ulogado = new Usuario();
+    ulogado = GerenciarLogin.verificarAcesso(request, response);
+    request.setAttribute("ulogado", ulogado);
+%>
+
+
 <html>
     <head>
         <meta charset ="utf-8">
@@ -20,18 +30,17 @@
     </head>
     <body>
 
-
         <header id="header">
-                <div>
-                    <jsp:include page="template/header.jsp"></jsp:include>
+            <div>
+                <jsp:include page="template/header.jsp"></jsp:include>
                 </div>
-                <div id="menu" class="container-main">
-                    <jsp:include page="template/menu.jsp"></jsp:include>
+                <div id="menu">
+                <jsp:include page="template/menu.jsp"></jsp:include>
                 </div>
-        </header>
-        <main id="main">
+            </header>
+            <main id="main">
 
-        </main>
+            </main>
 
         <jsp:include page="template/footer.jsp"></jsp:include>
 

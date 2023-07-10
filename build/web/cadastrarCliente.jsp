@@ -11,75 +11,72 @@
               initial-scale=1.0, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap/bootstrap.min.css" 
               type="text/css">
-        <link rel="stylesheet" href="css/nav.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="webfonts/css/all.css" type="text/css">
         <link rel="stylesheet" href="datatables/css/dataTables.bootstrap4.min.css" type="text/css">
-              
+
         <title>PROJETO ETB</title>
     </head>
     <body>
-        <div id="container">
-            <div id="header">
+
+        <header id="header">
+            <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
-            </div>
-            <div id="menu">
+                </div>
+                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
-            </div>
-            <div id="conteudo">
+                </div>
+            </header>
+            <main id="main">
                 <%-- 
-                 if( request.getAttribute("msg")!= null){
-                            out.println(msg);
-                %>
-                <script type="text/javascript">
-                    alert('<%= request.getAttribute("msg") %>');
-                </script>
+                     if( request.getAttribute("msg")!= null){
+                                out.println(msg);
+                    %>
+                    <script type="text/javascript">
+                        alert('<%= request.getAttribute("msg") %>');
+                    </script>
+                    <%
+
+    }               }
+                --%>
+
                 <%
-                
-}               }
-                 --%>
-                 
-                 <% 
-                   if(request.getAttribute("msg") != null){
-                  
-                 %> 
-                 <script type="text/javascript">
-                     $(document).ready(function(){
-                            Swal(
+                    if (request.getAttribute("msg") != null) {
+
+                %> 
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                    Swal(
                             "Atenção",
-                            "<%= request.getAttribute("msg") %>",
+                            "<%= request.getAttribute("msg")%>",
                             "error"
-                        );
-                
-                     
-                 </script>
-                 
-                 
-                 <%
-                   
+                            );
+                </script>
+
+
+                <%
+
                     }
-                 %>
-                
-                 
-              
+                %>
+
                 <form action="gerenciarCliente" method="POST">
-                    
-                    <h3 class="text-center mt-5" style="padding-top:20px">
+
+                    <h3 class="text-center mt-3 mb-5">
                         Página de Cadastro
                     </h3>
                     <input type="hidden" id="idcliente" name="idCliente"
                            value ="${cliente.idCliente}">
-                    
-                    <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-3 offset-md-2">
                         <label for="idnome"
                                class="col-md-3 col-form-label-lg">Nome</label>
                         <div class="col-md-5">
                             <input type="text" id="idnome" name="nome"
                                    class="form-control" value="${cliente.nome}">
                         </div>
-                        
-                        
                     </div>
-                      <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-2 offset-md-2">
                         <label for="idcpf"
                                class="col-md-3 col-form-label-lg">cpf
                         </label>
@@ -87,11 +84,9 @@
                             <input type="text" id="idcpf" name="cpf"
                                    class="form-control" value="${cliente.cpf}">
                         </div>
-                        
-                        
                     </div>
-                        
-                         <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-2 offset-md-2">
                         <label for="idemail"
                                class="col-md-3 col-form-label-lg">Email
                         </label>
@@ -99,10 +94,9 @@
                             <input type="text" id="idemail" name="email"
                                    class="form-control" value="${cliente.email}">
                         </div>
-                        
-                        
                     </div>
-                         <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-2 offset-md-2">
                         <label for="idendereco"
                                class="col-md-3 col-form-label-lg">Endereço
                         </label>
@@ -110,10 +104,9 @@
                             <input type="text" id="idendereco" name="endereco"
                                    class="form-control" value="${cliente.endereco}">
                         </div>
-                        
-                        
                     </div>
-                         <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-2 offset-md-2">
                         <label for="idtelefone"
                                class="col-md-3 col-form-label-lg">Telefone
                         </label>
@@ -121,31 +114,28 @@
                             <input type="text" id="idtelefone" name="telefone"
                                    class="form-control" value="${cliente.telefone}">
                         </div>
-                        
-                        
                     </div>
-                    <div class="form-group row mt-5 offset-md-2">
+
+                    <div class="form-group row mt-2 offset-md-2">
                         <label for="idstatus"
                                class="col-md-3 col-form-label-lg">Status
                         </label>
                         <div class="col-md-5">
-                            <select id="idstatus" name="status"
-                                    class="form-control-sm">
+                            <select id="idstatus" name="status" class="form-control">
                                 <option value="">Escolha uma opção</option>
                                 <option value="1"
                                     <c:if test="${cliente.status == 1}">
-                                    selected=""</c:if>>Ativado
+                                        selected=""</c:if>>Ativado
                                 </option>
                                 <option value="0"
                                     <c:if test="${cliente.status == 0}">
                                         selected=""</c:if>>Desativado
                                 </option>
-                                
                             </select>
                         </div>
-                                          
                     </div>
-                    <div class="d-md-flex justify-content-md-end mt-5">
+
+                    <div class="d-md-flex justify-content-md-end mt-2">
                         <button class="btn btn-primary btn-md mr-4">
                             Gravar&nbsp;<i class="fa-solid fa-floppy-disk"></i>
                         </button>
@@ -153,25 +143,21 @@
                            class="btn btn-danger btn-md mr-3"
                            role="button">
                             Voltar&nbsp;<i class="fa-solid fa-cirle-left"></i>
-                            
                         </a>
-                        
                     </div>
-                    
-                    
-                    
                 </form>
-               
-            </div>
-       
+            </main>
+
+        <jsp:include page="template/footer.jsp"></jsp:include>
+
         <!-- JQuery.js -->
         <script src="js/jquery-3.6.0.min.js"></script>
-        
+
         <!-- Popper via cdn -->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <!-- Bootstrap.js -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/sweetalert.js"></script>
-  
+
     </body>
 </html>

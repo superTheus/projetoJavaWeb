@@ -23,16 +23,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     height: auto;
 }
 
-/*.container-main {
-    width: 100%;
-    max-width: 1500px;
-    margin: auto;
-}*/
-
 #main {
     width: 100%;
     height: auto;
     min-height: 50vh;
+    max-width: 1200px;
+    margin: auto;
 }
 
 #footer {
@@ -101,4 +97,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 .navbar-collapse{
     background: #fff;
+}
+
+.table-list {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
 }

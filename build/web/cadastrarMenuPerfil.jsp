@@ -12,29 +12,27 @@
               initial-scale=1.0, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap/bootstrap.min.css" 
               type="text/css">
-        <link rel="stylesheet" href="css/nav.css" type="text/css">
         <link rel="stylesheet" href="webfonts/css/all.css" type="text/css">
         <link rel="stylesheet" href="datatables/css/dataTables.bootstrap4.min.css" type="text/css">
         <link rel="stylesheet" href="sweetalert2/sweetalert2.min.css" type ="text/css">
-         <link rel="stylesheet" href="css/styles.css" type="text/css">
+         <link rel="stylesheet" href="css/style.css" type="text/css">
         <title>PROJETO ETB</title>
     </head>
 
     <body>
-        <div id="container" class="bg-background">
-            <div id="header">
+        
+        <header id="header">
+            <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
-            </div>
-            <div id="menu">
+                </div>
+                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
-            </div>
-            <div id="conteudo"  >
-              
-                
-               
+                </div>
+            </header>
+            <main id="main">
                 <form action="gerenciarMenuPerfil" method="POST">
                     
-                    <h3 class="text-center mt-5" style="padding-top:20px">
+                    <h3 class="text-center mt-3 mb-4 p-3" style="padding-top:20px">
                         Cadastro de Menu e Perfil
                     </h3>
                     
@@ -63,14 +61,14 @@
                             
                         </div>
                     
-                    </div>
+                    </div>           
                     <div class="form-group  row offset-md-3 mt-5">
                         <label class="col-md-2 form-label" for="idmenu">Menu</label>
                         <div class="col-md-5">
                             <select id="idmenu" name="idMenu" 
-                                class="form-control-md mt-1">
+                                class="form-control mt-1">
                                 <option value=""selected>Escolha um Menu</option>
-                                <c:forEach var="m" items="${perfilv.naoMenus}">
+                                <c:forEach var="m" items="${menu}">
                                     <option value="${m.idMenu}">${m.nome}</option>
                                 </c:forEach>
                                 
@@ -100,6 +98,7 @@
                     
                     
                 </form>
+                                
                 <div class="h-100 justify-content-end align-items-center">
                     <h3 class="text-center">Menus Vinculados Por Perfil</h3>
                     <div class="table-responsive">
@@ -114,10 +113,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="m" items="${perfilv.menus}">
+                                <c:forEach var="m" items="${menusPerfil}">
                                 <tr>
                                     <td>${m.nome}</td>
-                                    <td>${m.link}</td>
+                                    <td>${m.link}</td>  
                                     <td>
                                         <c:if test="${m.exibir == 1}">
                                             Sim
@@ -152,10 +151,10 @@
                     </div>
                                     
                 </div>
-                </div> <!-- fim da div conteúdo -->
+            </main>
+
+        <jsp:include page="template/footer.jsp"></jsp:include>
                
-            </div><!-- fim da div container -->
-       
         <!-- JQuery.js -->
         <script src="js/jquery-3.6.0.min.js"></script>
         

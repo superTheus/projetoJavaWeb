@@ -1,7 +1,16 @@
+<%@page import="controller.GerenciarLogin"%>
+<%@page import="model.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
+
+<%
+    Usuario ulogado = new Usuario();
+    ulogado = GerenciarLogin.verificarAcesso(request, response);
+    request.setAttribute("ulogado", ulogado);
+%>
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -14,7 +23,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="webfonts/css/all.css" type="text/css">
         <link rel="stylesheet" href="datatables/css/dataTables.bootstrap4.min.css" type="text/css">
-        <title>PROJETO ETB</title>
+        <title>PROJETO ETB - MENUS</title>
     </head>
 
 
@@ -25,7 +34,7 @@
             <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
                 </div>
-                <div id="menu" class="container-main">
+                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
                 </div>
             </header>
@@ -33,107 +42,105 @@
                 <div class="col-12">
                     <h3 class="text-center mt-5" style="padding-top: 20px">Listagem de Menus</h3>
                 </div>
-                <div class="col-12" style="padding-bottom: 15px" >
+                <div class="col-12 px-0 pb-5" >
                     <a href="cadastrarMenu.jsp"
                        class="btn btn-primary btn-md"
                        role="button">Cadastrar Menu&nbsp;
                         <i class="fa-solid fa-floppy-disk"></i>
                     </a>
                 </div>
-                <div class="container">
-                    <table class="table table-hover" id="listarMenus">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Link</th>
-                                <th>Icone</th>
-                                <th>Exibir</th>
-                                <th>Status</th>
-                                <th>Ações</th>
+                <table class="table table-hover" id="listarMenus">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Link</th>
+                            <th>Icone</th>
+                            <th>Exibir</th>
+                            <th>Status</th>
+                            <th>Ações</th>
 
-                            </tr>
-                        </thead>
-                    <c:forEach items="${menus}" var="m">
-                        <tbody>
-                            <tr>
-                                <td>${m.nome}</td>
-                                <td>${m.link}</td>
-                                <td>${m.icone}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${m.exibir == 1}">
-                                            Sim
-                                        </c:when>
-                                        <c:otherwise>
-                                            Não
-                                        </c:otherwise>
+                        </tr>
+                    </thead>
+                <c:forEach items="${menus}" var="m">
+                    <tbody>
+                        <tr>
+                            <td>${m.nome}</td>
+                            <td>${m.link}</td>
+                            <td>${m.icone}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${m.exibir == 1}">
+                                        Sim
+                                    </c:when>
+                                    <c:otherwise>
+                                        Não
+                                    </c:otherwise>
 
-                                    </c:choose>
+                                </c:choose>
 
 
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${m.status == 1}">
-                                            Ativado
-                                        </c:when>
-                                        <c:otherwise>
-                                            Desativado
-                                        </c:otherwise>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${m.status == 1}">
+                                        Ativado
+                                    </c:when>
+                                    <c:otherwise>
+                                        Desativado
+                                    </c:otherwise>
 
-                                    </c:choose>
+                                </c:choose>
 
-                                </td>
-                                <td>
-                                    <a href="gerenciarMenu?acao=alterar&idMenu=${m.idMenu}"
-                                       class="btn btn-info btn-md" role="button">
-                                        Alterar&nbsp;<i class="fa-solid fa-pen-to-square"></i>
+                            </td>
+                            <td>
+                                <a href="gerenciarMenu?acao=alterar&idMenu=${m.idMenu}"
+                                   class="btn btn-info btn-md" role="button">
+                                    Alterar&nbsp;<i class="fa-solid fa-pen-to-square"></i>
 
-                                    </a>
-                                    <script type="text/javascript">
-                                        function confirmDesativar(id, nome) {
-                                            if (confirm('Deseja desativar o menu ' + nome + '?')) {
-                                                location.href = "gerenciarMenu?acao=desativar&idMenu=" + id;
-                                            }
+                                </a>
+                                <script type="text/javascript">
+                                    function confirmDesativar(id, nome) {
+                                        if (confirm('Deseja desativar o menu ' + nome + '?')) {
+                                            location.href = "gerenciarMenu?acao=desativar&idMenu=" + id;
                                         }
+                                    }
 
-                                        function confirmAtivar(id, nome) {
-                                            if (confirm('Deseja ativar o menu ' + nome + '?')) {
-                                                location.href = "gerenciarMenu?acao=ativar&idMenu=" + id;
-                                            }
+                                    function confirmAtivar(id, nome) {
+                                        if (confirm('Deseja ativar o menu ' + nome + '?')) {
+                                            location.href = "gerenciarMenu?acao=ativar&idMenu=" + id;
                                         }
-                                    </script>
+                                    }
+                                </script>
 
 
-                                    <c:choose>
-                                        <c:when test="${m.status == 1}">
-                                            <button class="btn btn-danger btn-sm" 
-                                                    onclick="confirmDesativar('${m.idMenu}', '${m.nome}')">
-                                                Desativar&nbsp;
-                                                <i class="fa-solid fa-user-lock"></i>
-                                            </button>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <button class="btn btn-sucesss btn-sm"
-                                                    onclick="confirmAtivar('${m.idMenu}', '${m.nome}')">
-                                                Ativar&nbsp;
-                                                <i class="fa-solid fa-user-shield"></i>
-                                            </button>
+                                <c:choose>
+                                    <c:when test="${m.status == 1}">
+                                        <button class="btn btn-danger btn-sm" 
+                                                onclick="confirmDesativar('${m.idMenu}', '${m.nome}')">
+                                            Desativar&nbsp;
+                                            <i class="fa-solid fa-user-lock"></i>
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-sucesss btn-sm"
+                                                onclick="confirmAtivar('${m.idMenu}', '${m.nome}')">
+                                            Ativar&nbsp;
+                                            <i class="fa-solid fa-user-shield"></i>
+                                        </button>
 
-                                        </c:otherwise>
-
-
-                                    </c:choose>
-
-                                </td>
-                            </tr>
-                        </c:forEach>   
-                    </tbody>
-
-                </table>
+                                    </c:otherwise>
 
 
-            </div>
+                                </c:choose>
+
+                            </td>
+                        </tr>
+                    </c:forEach>   
+                </tbody>
+
+            </table>
+
+
         </main>
 
         <jsp:include page="template/footer.jsp"></jsp:include>

@@ -12,111 +12,111 @@
               initial-scale=1.0, shrink-to-fit=no">
         <link rel="stylesheet" href="bootstrap/bootstrap.min.css" 
               type="text/css">
-        <link rel="stylesheet" href="css/nav.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="webfonts/css/all.css" type="text/css">
         <link rel="stylesheet" href="datatables/css/dataTables.bootstrap4.min.css" type="text/css">
         <link rel="stylesheet" href="sweetalert2/sweetalert2.min.css"  type="text/css">
-         <link rel="stylesheet" href="css/styles.css" type="text/css">
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
         <title>PROJETO ETB</title>
     </head>
-    
+
     <body>
-        <div id="container" class="bg-background">
-            <div id="header">
+
+        <header id="header">
+            <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
-            </div>
-            <div id="menu">
+                </div>
+                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
-            </div>
-            <div id="conteudo" class="bg-background" >
-              
-                
-               
+                </div>
+            </header>
+            <main id="main">
                 <form action="gerenciarMenu" method="POST">
-                    
-                    <h3 class="text-center mt-5" style="padding-top:20px">
+
+                    <h3 class="text-center mt-3 mb-5 p-2">
                         Página de Cadastro
                     </h3>
                     <input type="hidden" id="idmenu" name="idMenu"
                            value ="${menu.idMenu}">
-                    
-                    <div class="form-group row mt-5 offset-md-3">
-                        <label for="idnome"
-                               class="col-md-2 col-form-label-lg">Nome</label>
-                        <div class="col-md-5">
-                            <input type="text" id="idnome" name="nome"
-                                   class="form-control" value="${menu.nome}">
-                        </div>
-                        
-                        
+
+                <div class="form-group row mt-3 offset-md-3">
+                    <label for="idnome"
+                           class="col-md-2 col-form-label-lg">Nome</label>
+                    <div class="col-md-5">
+                        <input type="text" id="idnome" name="nome"
+                               class="form-control" value="${menu.nome}">
                     </div>
-                    <div class="form-group row mt-5 offset-md-3">
-                        <label for="idlink"
-                               class="col-md-2 col-form-label-lg">Link
-                        </label>
-                        <div class="col-md-5">
-                            <input type="text" id="idlink" name="link"
-                                   class="form-control" value="${menu.link}">
-                        </div>
+
+
+                </div>
+                <div class="form-group row mt-2 offset-md-3">
+                    <label for="idlink"
+                           class="col-md-2 col-form-label-lg">Link
+                    </label>
+                    <div class="col-md-5">
+                        <input type="text" id="idlink" name="link"
+                               class="form-control" value="${menu.link}">
                     </div>
-                    
-                           <div class="form-group row mt-5 offset-md-3">
-                        <label for="idicone"
-                               class="col-md-2 col-form-label-lg">Icone
-                        </label>
-                        <div class="col-md-5">
-                            <input type="text" id="idlink" name="icone"
-                                   class="form-control" value="${menu.icone}">
-                        </div>
+                </div>
+
+                <div class="form-group row mt-2 offset-md-3">
+                    <label for="idicone"
+                           class="col-md-2 col-form-label-lg">Icone
+                    </label>
+                    <div class="col-md-5">
+                        <input type="text" id="idlink" name="icone"
+                               class="form-control" value="${menu.icone}">
                     </div>
-                    <div class="form-group row mt-5 offset-md-3">
-                        <label for="idexibir"
-                               class="col-md-2 col-form-label-lg">Exibir
-                        </label>
-                        <div class="col-md-5">
-                            <select id="idexibir" name="exibir"
+                </div>
+                <div class="form-group row mt-2 offset-md-3">
+                    <label for="idexibir"
+                           class="col-md-2 col-form-label-lg">Exibir
+                    </label>
+                    <div class="col-md-5">
+                        <select id="idexibir" name="exibir"
                                 class="form-control mt-2">
-                                <option value="">Escolha uma opção</option>
-                                <option value="1"
+                            <option value="">Escolha uma opção</option>
+                            <option value="1"
                                     <c:if test="${menu.exibir == 1}">
                                         selected=""
                                     </c:if>>Sim
-                                </option>
-                                <option value="0"
+                            </option>
+                            <option value="0"
                                     <c:if test="${menu.exibir == 0}">
                                         selected=""
                                     </c:if>>Não
-                                </option>
-                                
-                            </select>
-                            
-                        </div>
-                        
-                        
-                    </div>   
-                   
-                    <div class="form-group row mt-5 offset-md-3">
-                        <label for="idstatus"
-                               class="col-md-2 col-form-label-lg">Status
-                        </label>
-                        <div class="col-md-5">
-                            <select id="idstatus" name="status"
-                                    class="form-control mt-2">
-                                <option value="">Escolha uma opção</option>
-                                <option value="1"
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>   
+
+                <div class="form-group row mt-2 offset-md-3">
+                    <label for="idstatus"
+                           class="col-md-2 col-form-label-lg">Status
+                    </label>
+                    <div class="col-md-5">
+                        <select id="idstatus" name="status"
+                                class="form-control mt-2">
+                            <option value="">Escolha uma opção</option>
+                            <option value="1"
                                     <c:if test="${menu.status == 1}">
-                                    selected=""</c:if>>Ativado
-                                </option>
-                                <option value="0"
+                                        selected=""</c:if>>Ativado
+                                    </option>
+                                    <option value="0"
                                     <c:if test="${menu.status == 0}">
                                         selected=""</c:if>>Desativado
-                                </option>
-                                
+                                    </option>
+
                             </select>
                         </div>
-                                          
+
                     </div>
-                    <div class="d-md-flex justify-content-md-end mt-5">
+                    
+                    <div class="d-md-flex justify-content-md-end mt-2">
                         <button class="btn btn-primary btn-md mr-4">
                             Gravar&nbsp;<i class="fa-solid fa-floppy-disk"></i>
                         </button>
@@ -124,53 +124,54 @@
                            class="btn btn-danger btn-md mr-3"
                            role="button">
                             Voltar&nbsp;<i class="fa-solid fa-cirle-left"></i>
-                            
+
                         </a>
-                        
+
                     </div>
-                    
-                    
-                    
+
+
+
                 </form>
-               
-            </div>
-       
-        <!-- JQuery.js -->
-        <script src="js/jquery-3.6.0.min.js"></script>
-        
-        <!-- Popper via cdn -->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- Bootstrap.js -->
-        <script src="js/bootstrap.min.js"></script>
-        <script src="sweetalert2/sweetalert2.min.js"></script>
-        
+            </main>
+
+        <jsp:include page="template/footer.jsp"></jsp:include>
+
+            <!-- JQuery.js -->
+            <script src="js/jquery-3.6.0.min.js"></script>
+
+            <!-- Popper via cdn -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <!-- Bootstrap.js -->
+            <script src="js/bootstrap.min.js"></script>
+            <script src="sweetalert2/sweetalert2.min.js"></script>
+
         <%
-            if(request.getAttribute("msg") != null){
-        
+            if (request.getAttribute("msg") != null) {
+
         %>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function () {
                 Swal.fire({
                     position: 'top-center',
                     icon: 'error',
                     title: 'Atenção',
-                    text: '<%= request.getAttribute("msg") %>',
-                    showConfirmButton : false,
+                    text: '<%= request.getAttribute("msg")%>',
+                    showConfirmButton: false,
                     timer: 3000
                 });
-                
+
             });
-            
-                    
-            
+
+
+
         </script>
-        
-        
+
+
         <%
-            } 
+            }
         %>
-      
-        
-        </body>
+
+
+    </body>
 </html>
 

@@ -1,6 +1,15 @@
+<%@page import="controller.GerenciarLogin"%>
+<%@page import="model.Usuario"%>
 <%@page contentType="text/html; utf-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<%
+    Usuario ulogado = new Usuario();
+    ulogado = GerenciarLogin.verificarAcesso(request, response);
+    request.setAttribute("ulogado", ulogado);
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +22,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css">
         <link rel="stylesheet" href="webfonts/css/all.css" type="text/css">
         <link rel="stylesheet" href="datatables/css/dataTables.bootstrap4.min.css" type="text/css">
-        <title>Página Inicial</title>
+        <title>PROJETO ETB - AGENDAMENTOS</title>
     </head>
     <body>
 
@@ -21,15 +30,15 @@
             <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
                 </div>
-                <div id="menu" class="container-main">
+                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
                 </div>
             </header>
             <main id="main">
                 <div class="col-12">
                     <h3 class="text-center mt-5">Listagem de Agendamento</h3>
-                    <div class="col-12" style="padding-bottom: 15px">
-                        <a href="cadastrarAgendamento.jsp"
+                    <div class="col-12 px-0 pb-5">
+                        <a href="gerenciarAgendat?acao=alterar&idMenu=${m.idMenu}"
                            class="btn btn-primary btn-md"
                            role="button">
                             Cadastrar Agendamento&nbsp;
@@ -37,89 +46,92 @@
 
                         </a>
                     </div>
-                    <div class="container">
-                        <table class="table table-hover table-responsive-md"
-                               id="listarAgendamento">
-                            <thead>
-                            <trq>
+                    <table class="table table-hover table-responsive-md"
+                           id="listarAgendamento">
+                        <thead>
+                        <trq>
 
-                                <th>Valor Total</th>
-                                <th>Cliente</th>
-                                <th>Usuario</th>
-                                <th>Status</th>
-                                <th>Ação</th>
+                            <th>Valor Total</th>
+                            <th>Cliente</th>
+                            <th>Usuario</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                            </tr>
+                            </thead>
+
+                        <c:forEach items="${agendamentos}" var="a">
+                            <tbody>
+                                <tr>
+
+                                    <td>${a.valorTotal}</td>
+                                    <td>${a.cliente.nome}</td>
+                                    <td>${a.usuario.nome}</td>
+
+
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${a.status == 1}">
+                                                Ativado
+                                            </c:when>
+                                            <c:otherwise>
+                                                Desativado
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+
+                                    <td>
+                                        <a href="gerenciarAgendamento?acao=alterar&idAgendamento=${a.idAgendamento}"
+                                           class="btn btn-primary btn-sm"
+                                           role="button">Alterar&nbsp;
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                           <a href="gerenciarAgendamento?acao=relatorio&idAgendamento=${a.idAgendamento}"
+                                           class="btn btn-secondary btn-sm"
+                                           role="button" target="_blank">Imprimir&nbsp;
+                                            <i class="fa-solid fa-print"></i>
+                                        </a>
+                                        <script type="text/javascript">
+                                            function confirmDesativar(id, valorTotal) {
+                                                if (confirm('Deseja desativar o Agendamento '
+                                                        + data + ' ?')) {
+                                                    location.href = "gerenciarAgendamento?acao=desativar&idAgendamento=" + id;
+                                                }
+                                            }
+
+                                            function confirmAtivar(id, valorTotal) {
+                                                if (confirm('Deseja ativar o Agendamento '
+                                                        + data + ' ?')) {
+                                                    location.href = "gerenciarAgendamento?acao=ativar&idAgendamento=" + id;
+                                                }
+                                            }
+                                        </script>
+                                        <c:choose>
+                                            <c:when test="${a.status == 1}">
+                                                <button class="btn btn-danger btn-sm"
+                                                        onclick="confirmDesativar('${a.idAgendamento}', '${a.valorTotal}')">
+                                                    Desativar&nbsp;
+                                                    <i class="fas fa-user fa-user-lock"></i>
+                                                </button>
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button class="btn btn-success btn-sm"
+                                                        onclick="confirmAtivar('${a.idAgendamento}', '${a.valorTotal}')">
+                                                    Ativar&nbsp;
+                                                    <i class="fas fa-user-shield"></i>
+                                                </button>
+
+                                            </c:otherwise>
+
+                                        </c:choose>
+
+
+                                    </td>
                                 </tr>
-                                </thead>
 
-                            <c:forEach items="${agendamentos}" var="a">
-                                <tbody>
-                                    <tr>
-
-                                        <td>${a.valorTotal}</td>
-                                        <td>${a.cliente.nome}</td>
-                                        <td>${a.usuario.nome}</td>
-
-
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${a.status == 1}">
-                                                    Ativado
-                                                </c:when>
-                                                <c:otherwise>
-                                                    Desativado
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-
-                                        <td>
-                                            <a href="gerenciarAgendamento?acao=alterar&idAgendamento=${a.idAgendamento}"
-                                               class="btn btn-primary btn-sm"
-                                               role="button">Alterar&nbsp;
-                                                <i class="fa-solid fa-pen-to-square"></i>
-                                            </a>
-                                            <script type="text/javascript">
-                                                function confirmDesativar(id, valorTotal) {
-                                                    if (confirm('Deseja desativar o Agendamento '
-                                                            + data + ' ?')) {
-                                                        location.href = "gerenciarAgendamento?acao=desativar&idAgendamento=" + id;
-                                                    }
-                                                }
-
-                                                function confirmAtivar(id, valorTotal) {
-                                                    if (confirm('Deseja ativar o Agendamento '
-                                                            + data + ' ?')) {
-                                                        location.href = "gerenciarAgendamento?acao=ativar&idAgendamento=" + id;
-                                                    }
-                                                }
-                                            </script>
-                                            <c:choose>
-                                                <c:when test="${a.status == 1}">
-                                                    <button class="btn btn-danger btn-sm"
-                                                            onclick="confirmDesativar('${a.idAgendamento}', '${a.valorTotal}')">
-                                                        Desativar&nbsp;
-                                                        <i class="fas fa-user fa-user-lock"></i>
-                                                    </button>
-
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <button class="btn btn-success btn-sm"
-                                                            onclick="confirmAtivar('${a.idAgendamento}', '${a.valorTotal}')">
-                                                        Ativar&nbsp;
-                                                        <i class="fas fa-user-shield"></i>
-                                                    </button>
-
-                                                </c:otherwise>
-
-                                            </c:choose>
-
-
-                                        </td>
-                                    </tr>
-
-                                </c:forEach>    
-                            </tbody>
-                    </table>
-                </div>
+                            </c:forEach>    
+                        </tbody>
+                </table>
             </div><!-- fim da div col-12 -->
         </main>
 

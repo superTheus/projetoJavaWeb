@@ -26,9 +26,9 @@
             <div>
                 <jsp:include page="template/header.jsp"></jsp:include>
                 </div>
-                <div id="menu" class="container-main">
+<!--                <div id="menu">
                 <jsp:include page="template/menu.jsp"></jsp:include>
-                </div>
+                </div>-->
             </header>
             <main id="main">
                 <form action="gerenciarLogin" method="POST">
@@ -54,7 +54,7 @@
                         </div>
 
                     </div>
-                    <div class="d-md-flex justify-content-md-end mr-3 mt-5">
+                    <div class="d-md-flex justify-content-md-end mr-3 mt-5 offset-md-3">
                         <button class="btn btn-primary btn-md mr-2">
                             login&nbsp;<i class="fa-solid fa-lock-open"></i>
                         </button>

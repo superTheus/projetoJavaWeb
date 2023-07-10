@@ -1,5 +1,14 @@
 package controller;
 
+import com.aspose.pdf.Page;
+import com.aspose.pdf.TextFragment;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -37,15 +46,13 @@ public class GerenciarAgendamento extends HttpServlet {
             if (acao.equals("listar")) {
                 ArrayList<Agendamento> agendamentos = new ArrayList<>();
                 agendamentos = adao.getLista();
-                
-                System.out.println(agendamentos);
-                
+
                 RequestDispatcher dispatcher
                         = getServletContext()
                                 .getRequestDispatcher("/listarAgendamentos.jsp");
                 request.setAttribute("agendamentos", agendamentos);
                 dispatcher.forward(request, response);
-                
+
             } else if (acao.equals("alterar")) {
                 a = adao.getCarregarPotId(Integer.parseInt(idAgendamento));
                 if (a.getIdAgendamento() > 0) {
@@ -73,6 +80,56 @@ public class GerenciarAgendamento extends HttpServlet {
                     mensagem = "Agendamento desativado com sucesso!!!";
                 } else {
                     mensagem = "ERRO NA ALTERAÇÃO!";
+                }
+
+            } else if (acao.equals("relatorio")) {
+                Agendamento agendamentos = new Agendamento();
+                agendamentos = adao.getCarregarPotId(Integer.parseInt(idAgendamento));
+                
+                
+                
+                System.out.println(agendamentos);
+
+                Document documento = new Document();
+
+                response.setContentType("application/pdf");
+                response.reset();
+                response.addHeader("Content-Disposition", "inline; filename=agendamentos.pdf");
+
+                try {
+                    Document document = new Document();
+                    PdfWriter.getInstance(document, response.getOutputStream());
+                    document.open();
+                    document.add(new Paragraph("Relatório de Agendamento"));
+                    document.add(new Paragraph(" "));
+
+
+                    PdfPTable tableValue = new PdfPTable(2);
+                    PdfPCell col1Value = new PdfPCell(new Paragraph("Valor Total: "));
+                    PdfPCell col2Value = new PdfPCell(new Paragraph(String.valueOf(agendamentos.getValorTotal())));
+                    tableValue.addCell(col1Value);
+                    tableValue.addCell(col2Value);
+
+                    PdfPTable tableClient = new PdfPTable(2);
+                    PdfPCell col1Client = new PdfPCell(new Paragraph("Cliente: "));
+                    PdfPCell col2Client = new PdfPCell(new Paragraph(String.valueOf(agendamentos.getCliente().getNome())));
+                    tableClient.addCell(col1Client);
+                    tableClient.addCell(col2Client);
+
+                    PdfPTable tableUser = new PdfPTable(2);
+                    PdfPCell col1User = new PdfPCell(new Paragraph("Usuário: "));
+                    PdfPCell col2User = new PdfPCell(new Paragraph(String.valueOf(agendamentos.getUsuario().getNome())));
+                    tableUser.addCell(col1User);
+                    tableUser.addCell(col2User);
+
+                    document.add(tableValue);
+                    document.add(tableClient);
+                    document.add(tableUser);
+
+                    document.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                    documento.close();
                 }
 
             } else {

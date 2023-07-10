@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import model.Perfil;
 import model.PerfilDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import model.Menu;
+import model.MenuDAO;
 
 
 /**
@@ -37,17 +40,29 @@ public class GerenciarMenuPerfil extends HttpServlet {
         
         Perfil p = new Perfil();
         PerfilDAO pdao = new PerfilDAO();
+
+        MenuDAO mdao =  new MenuDAO();
         
         try {
             
             if(acao.equals("vincular")){
+                
+                ArrayList<Menu> menus = new ArrayList<>();
+                ArrayList<Menu> menusPerfil = new ArrayList<>();
+                
+                menus = mdao.getLista();
+                menusPerfil = pdao.getMenus(Integer.parseInt(idPerfil));
+                
                 p = pdao.getCarregarPorId(
                       Integer.parseInt(idPerfil));
+                
                 if(p.getIdPerfil() > 0){
                     RequestDispatcher dispatcher =
                         getServletContext().
                             getRequestDispatcher("/cadastrarMenuPerfil.jsp");
                     request.setAttribute("perfilv", p);
+                    request.setAttribute("menu", menus);
+                    request.setAttribute("menusPerfil", menusPerfil);
                     dispatcher.forward(request, response);
                            
                 }else{
